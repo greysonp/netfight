@@ -11,7 +11,7 @@
         "128": "img/icon_small.png"
   },
 
-  "browser_action": {
+  "page_action": {
     "default_popup": "popup.html",
     "default_icon": "img/icon_small.png"
   },
@@ -32,6 +32,11 @@
       "run_at": "document_end"
     }
   ],
+
+  "background": {
+    "scripts": ["js/background.js"],
+    "persistent": false
+  },
 
   "permissions": [
     "http://www.netflix.com/*", 
