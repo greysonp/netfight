@@ -37,9 +37,19 @@ function netfightClick(e) {
             oldArray = old['netfight'];
 
         // Add our new object to the array and store it
-        oldArray.push(obj);
+        //oldArray.push(obj);
+        addObject(oldArray, obj);
         chrome.storage.local.set({ 'netfight': oldArray });
     });
+}
+
+function addObject(arr, ele) {
+    for(var i = 0; i < arr.length; ++i) {
+        if(ele.id == arr[i].id) {
+            return;
+        }
+    }
+    arr.push(ele);
 }
 
 function ensureButtonExists() {
