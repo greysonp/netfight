@@ -11,8 +11,6 @@ $(document).ready(function() {
 });
 
 function makeFighter(o) {
-    console.log(o);
-
     // Build all of our fighters
     var $li = $('<li></li>', {
         'class': 'fighter',
@@ -25,10 +23,31 @@ function makeFighter(o) {
         'class': 'fighterInner'
     });
 
+    $.ajax({
+        url: "http://www.omdbapi.com/?t=" + o.title,
+        dataType: 'jsonp',
+        success: function(o) {
+            console.log("Success?");
+            return function(data) {
+                console.log("here");
+                console.log(o);
+                console.log(data);
+            }
+        },
+        error: function(err) {
+            console.log(err);
+        }
+    });
+
     if(!o.img) {
+        //add call to IMDB to fetch image
+        
+
+        //for now, throw in a placeholder
         var $img = $('<img></img>', {
             'src': '../img/no_img_placeholder.png'
         });
+
     }
     else {
         var $img = $('<img></img>', {
@@ -44,7 +63,6 @@ function makeFighter(o) {
 }
 
 function addOverlay() {
-    console.log("Adding overlay");
     var $div = $('<div></div>', {
         'class': 'fighterOverlay'
     });
@@ -58,17 +76,12 @@ function removeOverlay() {
 }
 
 function removeFighter() {
-    console.log("removeFighter");
     var li = this;
     chrome.storage.local.get('netfight', function(obj) {
-        console.log("removing");
-        console.log(obj['netfight']);
         for (var i = 0, len = obj['netfight'].length; i < len; i++) {
             if(obj['netfight'][i].id === $(li).attr('id')) {
-                console.log("Found");
                 var nArr = obj['netfight'];
                 nArr.splice(i, 1);
-                console.log(nArr);
                 chrome.storage.local.set({'netfight': nArr});
                 $(li).remove();
             }

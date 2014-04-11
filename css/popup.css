@@ -12,6 +12,11 @@ ul.fighters li {
     position: relative;
 }
 
+ul.fighters div.fighterInner img {
+    width: 166px;
+    height: 236px;
+}
+
 ul.fighters div.fighterOverlay {
     width: 100%;
     height: 100%;
