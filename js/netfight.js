@@ -60,6 +60,13 @@ function getRatings(title){
         //Finds if the title is a movie or a TV show and makes the appropriate request 
         //to Mega Critic
         var megaTitle = title.toLowerCase().replace(/ /g,"-");
+        //Removes any punctuation
+        megaTitle = megaTitle.replace(/[\.,\/#!$%\^&\*;:{}=_`~()]/g,"");
+        //Corrects any mistakes made by the above two
+        megaTitle = megaTitle.replace(/--/g,"-");
+        
+        console.log("TESTING");
+        console.log(megaTitle);
         if(result.tomatoMeter == "N/A")
             getMegaCriticTVRatings(megaTitle);
         else
