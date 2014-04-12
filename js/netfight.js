@@ -42,7 +42,6 @@ function getRatings(title){
     $.get(makeIMDBURL(title),function(result){
         try{
             result = JSON.parse(result);
-            console.log(result);
         }
         catch(e){
           result = {
@@ -64,9 +63,7 @@ function getRatings(title){
         megaTitle = megaTitle.replace(/[\.,\/#!$%\^&\*;:{}=_`~()]/g,"");
         //Corrects any mistakes made by the above two
         megaTitle = megaTitle.replace(/--/g,"-");
-        
-        console.log("TESTING");
-        console.log(megaTitle);
+
         if(result.tomatoMeter == "N/A")
             getMegaCriticTVRatings(megaTitle);
         else
@@ -77,7 +74,7 @@ function getRatings(title){
 
 function getMegaCriticMovieRatings(title){
     $.get(makeMegaCriticMovieURL(title),function(result){
-        megaRatings = megacriticCallBack(result,title,false);
+        megaRatings = megaCriticCallBack(result,title,false);
         megaPrint(megaRatings);
     });
 }
@@ -85,14 +82,13 @@ function getMegaCriticMovieRatings(title){
 
 function getMegaCriticTVRatings(title){
     $.get(makeMegaCriticTVURL(title),function(result){
-        megaRatings = megacriticCallBack(result,title,true);
+        megaRatings = megaCriticCallBack(result,title,true);
         megaPrint(megaRatings);
     });
 }
 
 
 function imdbPrint(ratingStats){
-    console.log(ratingStats);
     var $div = $('<div></div>');
     var $p1 = $('<p></p>', {'text': 'Title: ' + ratingStats.Title});
     var $p2 = $('<p></p>', {'text': 'IMDBScore: ' + ratingStats.IMDBScore});
@@ -108,7 +104,6 @@ function imdbPrint(ratingStats){
 }
 
 function megaPrint(ratingStats){
-    console.log(ratingStats);
     var $div = $('<div></div>');
     var $p1 = $('<p></p>', {'text': 'Title: ' + ratingStats.Title});
     var $p2 = $('<p></p>', {'text': 'MegaRating: ' + ratingStats.MegaRating});
@@ -125,7 +120,7 @@ function megaPrint(ratingStats){
 
 
 
-function megacriticCallBack(megaPage,title,isTV){
+function megaCriticCallBack(megaPage,title,isTV){
     var searchText = "ratingValue"
     var position = megaPage.search(searchText);
     var rating = parseFloat(megaPage.substr((position + searchText.length + 2),2));
@@ -144,7 +139,6 @@ function megacriticCallBack(megaPage,title,isTV){
 
 function makeMegaCriticMovieURL(title){
     url = megaCritic_Movie + title;
-    console.log(url);
     return url;
 }
 
@@ -152,7 +146,6 @@ function makeMegaCriticMovieURL(title){
 
 function makeMegaCriticTVURL(title){
     url = megaCritic_TV + title;
-    console.log(url);
     return url;
 }
 
