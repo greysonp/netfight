@@ -23,31 +23,11 @@ function makeFighter(o) {
         'class': 'fighterInner'
     });
 
-    $.ajax({
-        url: "http://www.omdbapi.com/?t=" + o.title,
-        dataType: 'jsonp',
-        success: function(o) {
-            console.log("Success?");
-            return function(data) {
-                console.log("here");
-                console.log(o);
-                console.log(data);
-            }
-        },
-        error: function(err) {
-            console.log(err);
-        }
-    });
-
     if(!o.img) {
-        //add call to IMDB to fetch image
-        
-
         //for now, throw in a placeholder
         var $img = $('<img></img>', {
             'src': '../img/no_img_placeholder.png'
         });
-
     }
     else {
         var $img = $('<img></img>', {
