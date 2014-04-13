@@ -20,11 +20,13 @@ function netfightClick(e) {
     var title = $parent.find('.title').text().trim();
     var link = $parent.find('.bobMovieHeader a:first').attr('href');
     var img = $('.vbox_' + id + ' img').attr('src');
+    var rating = parseInt($parent.find('.sbmfpr').attr('class').split('sbmf-')[1])/10;
     var obj = {
         'id': id,
         'title': title,
         'link': link,
-        'img': img
+        'img': img,
+        'rating': rating
     }
 
     // Store the movie in local storage
