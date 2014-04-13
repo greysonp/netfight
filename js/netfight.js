@@ -1,6 +1,6 @@
 var IMDB_API =  "http://www.omdbapi.com/?tomatoes=true";
-var megaCritic_Movie = "http://www.metacritic.com/movie/";
-var megaCritic_TV = "http://www.metacritic.com/tv/";
+var metaCritic_Movie = "http://www.metacritic.com/movie/";
+var metaCritic_TV = "http://www.metacritic.com/tv/";
 
 
 $(document).ready(function() {
@@ -8,7 +8,7 @@ $(document).ready(function() {
     chrome.storage.local.get('netfight', function(obj) {
         for (var i = 0; i < obj['netfight'].length; i++) {
             makeFighter(obj['netfight'][i]);
-            getRatings(obj['netfight'][i].title);
+            getRatings(obj['netfight'][i].title, obj['netfight'][i].id);
         }
     });
 });
@@ -38,133 +38,117 @@ function makeFighter(o) {
     });
     $removeButton.click(removeNetboxClick);
 
+    var genre = '<div><strong>Genre(s): </strong><span class="genre"></span></div>';
+    var imdb = '<div><strong>IMDB: </strong><span class="imdb"></span></div>';
+    var metacritic = '<div><strong>Metacritic: </strong><span class="metacritic"></span></div>';
+
     // Append everything together
     $h2.append($title);
     $div.append($h2);
     $div.append($img);
     $div.append($removeButton);
+    $div.append(genre);
+    $div.append(imdb);
+    $div.append(metacritic);
 
     // Add it to the page
     $('.netbox-container').append($div);
 }
 
 
-
-function getRatings(title){
-    $.get(makeIMDBURL(title),function(result){
+function getRatings(title, id) {
+    $.get(makeIMDBURL(title),function(result) {
         try{
             result = JSON.parse(result);
         }
-        catch(e){
+        catch(e) {
           result = {
                 'Response' : 'False',
             };
         }
         
-        if (result.Response === 'False'){
+        if (result.Response === 'False') {
             return null
         }
         
         var rating = {'Title': title, 'IMDBScore': result.imdbRating, 'Genre': result.Genre};
-        imdbPrint(rating);
+        imdbPrint(rating, id);
 
         //Finds if the title is a movie or a TV show and makes the appropriate request 
         //to Mega Critic
-        var megaTitle = title.toLowerCase().replace(/ /g,"-");
+        var metaTitle = title.toLowerCase().replace(/ /g,"-");
         //Removes any punctuation
-        megaTitle = megaTitle.replace(/[\.,\/#!$%\^&\*;:{}=_`~()]/g,"");
+        metaTitle = metaTitle.replace(/[\.,\/#!$%\^&\*;:{}=_`~()]/g,"");
         //Corrects any mistakes made by the above two
-        megaTitle = megaTitle.replace(/--/g,"-");
+        metaTitle = metaTitle.replace(/--/g,"-");
 
         if(result.tomatoMeter == "N/A")
-            getMegaCriticTVRatings(megaTitle);
+            getMetaCriticTVRatings(metaTitle, id);
         else
-            getMegaCriticMovieRatings(megaTitle);
+            getMetaCriticMovieRatings(metaTitle, id);
     });
 }
 
 
-function getMegaCriticMovieRatings(title){
-    $.get(makeMegaCriticMovieURL(title),function(result){
-        megaRatings = megaCriticCallBack(result,title,false);
-        megaPrint(megaRatings);
+function getMetaCriticMovieRatings(title, id) {
+    $.get(makeMetaCriticMovieURL(title),function(result) {
+        metaRatings = metaCriticCallBack(result,title,false);
+        metaPrint(metaRatings, id);
     });
 }
 
 
-function getMegaCriticTVRatings(title){
-    $.get(makeMegaCriticTVURL(title),function(result){
-        megaRatings = megaCriticCallBack(result,title,true);
-        megaPrint(megaRatings);
+function getMetaCriticTVRatings(title, id) {
+    $.get(makeMetaCriticTVURL(title),function(result) {
+        metaRatings = metaCriticCallBack(result,title,true);
+        metaPrint(metaRatings, id);
     });
 }
 
 
-function imdbPrint(ratingStats){
-    var $div = $('<div></div>');
-    var $p1 = $('<p></p>', {'text': 'Title: ' + ratingStats.Title});
-    var $p2 = $('<p></p>', {'text': 'IMDBScore: ' + ratingStats.IMDBScore});
-    var $p3 = $('<p></p>', {'text': 'Genre: ' + ratingStats.Genre});
-
-     // Append everything together
-    $div.append($p1);
-    $div.append($p2);
-    $div.append($p3);
-
-    // Add it to the page
-    $('body').append($div);
+function imdbPrint(ratingStats, id) {
+    $('#netbox-' + id + ' .imdb').text(ratingStats.IMDBScore);
+    $('#netbox-' + id + ' .genre').text(ratingStats.Genre);
 }
 
-function megaPrint(ratingStats){
-    var $div = $('<div></div>');
-    var $p1 = $('<p></p>', {'text': 'Title: ' + ratingStats.Title});
-    var $p2 = $('<p></p>', {'text': 'MegaRating: ' + ratingStats.MegaRating});
-    var $p3 = $('<p></p>', {'text': 'MegaScore: ' + ratingStats.MegaScore});
-
-     // Append everything together
-    $div.append($p1);
-    $div.append($p2);
-    $div.append($p3);
-
-    // Add it to the page
-    $('body').append($div);
+function metaPrint(ratingStats, id) {
+    $('#netbox-' + id + ' .metacritic').text(ratingStats.MetaRating);
 }
 
 
 
-function megaCriticCallBack(megaPage,title,isTV){
+function metaCriticCallBack(metaPage,title,isTV) {
     var searchText = "ratingValue"
-    var position = megaPage.search(searchText);
-    var rating = parseFloat(megaPage.substr((position + searchText.length + 2),2));
+    var position = metaPage.search(searchText);
+    var rating = parseFloat(metaPage.substr((position + searchText.length + 2),2));
 
     if(isTV)
         searchText = 'metascore_w user large tvshow positive';
     else
         searchText = 'metascore_w user large movie positive';
     
-    position = megaPage.search(searchText);
-    var score = parseFloat(megaPage.substr((position + searchText.length + 2),3));
+    position = metaPage.search(searchText);
+    var score = parseFloat(metaPage.substr((position + searchText.length + 2),3));
 
-    return numbers = {'Title': title, 'MegaRating':rating, 'MegaScore':score};
+    return numbers = {'Title': title, 'MetaRating':rating, 'MetaScore':score};
 }
 
 
-function makeMegaCriticMovieURL(title){
-    url = megaCritic_Movie + title;
+function makeMetaCriticMovieURL(title) {
+    url = metaCritic_Movie + title;
     return url;
 }
 
 
 
-function makeMegaCriticTVURL(title){
-    url = megaCritic_TV + title;
+function makeMetaCriticTVURL(title) {
+    url = metaCritic_TV + title;
     return url;
 }
 
 
-function makeIMDBURL(title){
+function makeIMDBURL(title) {
     url = IMDB_API + '&t=' + title;
-    console.log(url);
     return url;
 }
 
@@ -175,7 +159,7 @@ function removeNetboxClick(e) {
     chrome.storage.local.get('netfight', function(obj) {
         var a = obj['netfight'];
         for (var i = a.length - 1; i >= 0; i--) {
-            if (a[i].id == id){
+            if (a[i].id == id) {
                 a.splice(i, 1);
                 break;
             }
