@@ -69,12 +69,12 @@ $(window).resize(function() {
             'src': 'img/jester_hat_projectile.png'
         });
         loader.loadFile({
-            'id': 'mickey_hat',
-            'src': 'img/mickey_hat.png'
+            'id': 'mickey_ears',
+            'src': 'img/mickey_ears.png'
         });
         loader.loadFile({
-            'id': 'mickey_hat_projectile',
-            'src': 'img/mickey_hat_projectile.png'
+            'id': 'mickey_ears_projectile',
+            'src': 'img/mickey_ears_projectile.png'
         });
         loader.loadFile({
             'id': 'pope_hat',
