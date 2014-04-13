@@ -20,6 +20,10 @@ function netfightClick(e) {
     var title = $parent.find('.title').text().trim();
     var link = $parent.find('.bobMovieHeader a:first').attr('href');
     var img = $('.vbox_' + id + ' img').attr('src');
+    img = img.substring(0, img.length - 4);
+    img += 'jpg';
+    img = img.replace(/webp/, 'images');
+    
     // var rating = $parent.find('span.sbmfpr').attr('class');
     // rating = parseInt(rating.split('sbmf-')[1])/10;
 

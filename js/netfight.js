@@ -15,63 +15,6 @@ $(document).ready(function() {
     });
 });
 
-function initNetfight() {
-    _stage = new createjs.Stage("js-canvas");
-}
-
-function preloadNetfight() {
-    console.log("Here");
-    var loader = new createjs.QueueLoader();
-    loader.loadFile("img/astronaut_helmet.png");
-    var manifest = [{
-        'id': 'astronaut_helmet',
-        'src': 'img/astronaut_helmet.png'
-    },
-    {
-        'id': 'guy_fawkes',
-        'src': 'img/guy_fawkes.png'
-    },
-    {
-        'id': 'jason_mask',
-        'src': 'img/jason_mask.png'
-    },
-    {
-        'id': 'jester_hat',
-        'src': 'img/jester_hat.png'
-    },
-    {
-        'id': 'mickey_hat',
-        'src': 'img/mickey_hat.png'
-    },
-    {
-        'id': 'pope_hat',
-        'src': 'img/pope_hat.png'
-    },{
-        'id': 'saiyan_hair',
-        'src': 'img/saiyan_hair.png'
-    },
-    {
-        'id': 'wizard_hat',
-        'src': 'img/wizard_hat.png'
-    },
-    {
-        'id': 'wolverine',
-        'src': 'img/wolverine.png'
-    }
-    ];
-
-    loader.loadManifest(manifest);
-
-    loader.on("complete", function(evt) {
-        console.log(evt);
-    }, 
-    this);
-    loader.on("fileload", function(evt) {
-        console.log(evt);
-    }, this);
-
-}
-
 function enableNetfight() {
 
 }
