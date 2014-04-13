@@ -1,6 +1,7 @@
 var storageData = [];
 var thumbnails = [];
 var DATA_URL = 'http://netfight-img.herokuapp.com/?url=';
+var fighters = [];
 
 $(document).ready(function() {
     $('#js-canvas').attr('width', window.innerWidth);
@@ -109,17 +110,27 @@ $(window).resize(function() {
     scene.init = function(preloaded) {
         cutie.Log.d('title.init()');
 
-        // Put images on the stage        
+        // Create fighters
+        var cx = cutie.WIDTH/2;   
+        var cy = cutie.HEIGHT/2;
+        var angleOffset = (Math.PI * 2) / thumbnails.length;
+        var angle = angleOffset / 2;
+        var radius = cutie.HEIGHT/4;
         for (var i = 0; i < thumbnails.length; i++) {
             var f = makeFighter(preloaded, thumbnails[i], null);
-            f.x = Math.random() * cutie.WIDTH;
-            f.y = Math.random() * cutie.HEIGHT;
+            f.x = Math.cos(angle) * radius + cx;
+            f.y = Math.sin(angle) * radius + cy;
+            angle += angleOffset;
+            fighters.push(f);
             this.addChild(f);
         }
     }
 
     function makeFighter(preloaded, thumbnail, addonId) {
         var bitmap = new cutie.Bitmap(thumbnail);
+        bitmap.regX = bitmap.image.width/2;
+        bitmap.regY = bitmap.image.height/2;
+        bitmap.scaleX = bitmap.scaleY = 0.4;
         return bitmap;
     }
 
