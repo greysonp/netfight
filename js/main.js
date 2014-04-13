@@ -54,10 +54,17 @@ function addObject(arr, ele) {
 
 function ensureButtonExists() {
     if ($('.bobMovieContent .netfight-btn').length == 0) {
-        $('.bobMovieContent').append($('<button></button>', {
+        var $wrapper = $('<div></div>', { 'class': 'btnWrap mltBtn mltBtn-s186' });
+        var $link = $('<a></a>', {
+            'class': 'netfight-btn svf-button svf-button-add svfb-silver addlk evo-btn'
+        });
+        var $inner = $('<span></span>', {
             'text': 'Netfight',
-            'class': 'netfight-btn'
-        }));
+            'class': 'inr'
+        })
+        $link.append($inner);
+        $wrapper.append($link);
+        $('.bobMovieActions').append($wrapper);
         $('.bobMovieContent .netfight-btn').click(netfightClick);
     }
 }
