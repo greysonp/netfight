@@ -17,7 +17,10 @@ function makeFighter(o) {
     console.log(o); 
 
     // Build all of our fighters
-    var $div = $('<div></div>');
+    var $div = $('<div></div>', {
+        'class': 'netbox',
+        'id': 'netbox-' + o.id
+    });
     var $img = $('<img></img>', {
         'src': o.img
     });
@@ -27,13 +30,22 @@ function makeFighter(o) {
         'href': o.link
     });
 
+    var $removeButton = $('<a></a>', {
+        'href': '#',
+        'class': 'remove-btn',
+        'text': 'Remove',
+        'data-id': o.id
+    });
+    $removeButton.click(removeNetboxClick);
+
     // Append everything together
     $h2.append($title);
     $div.append($h2);
     $div.append($img);
+    $div.append($removeButton);
 
     // Add it to the page
-    $('body').append($div);
+    $('.netbox-container').append($div);
 }
 
 
@@ -154,4 +166,20 @@ function makeIMDBURL(title){
     url = IMDB_API + '&t=' + title;
     console.log(url);
     return url;
+}
+
+function removeNetboxClick(e) {
+    e.preventDefault();
+    var id = $(this).data('id');
+    $('#netbox-' + id).remove();
+    chrome.storage.local.get('netfight', function(obj) {
+        var a = obj['netfight'];
+        for (var i = a.length - 1; i >= 0; i--) {
+            if (a[i].id == id){
+                a.splice(i, 1);
+                break;
+            }
+        }
+        chrome.storage.local.set(obj);
+    });
 }

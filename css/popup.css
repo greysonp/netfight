@@ -9,6 +9,7 @@ html, body {
 h1 {
     font-size: 16px;
     color: #fff;
+    text-shadow: 0 1px 3px #500;
     background-color: #b9090b;
     padding: 10px 7px;
 }
@@ -64,8 +65,8 @@ ul.fighters div.fighterOverlay p {
 a.btn {
     display: inline-block;
     color: #fff;
+    text-shadow: 0 1px 3px #500;
     background-color: #b9090b;
-    border: 1px solid #ccc;
     padding: 8px;
     margin: 5px 0 5px 5px;
     text-decoration: none;

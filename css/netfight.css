@@ -1,0 +1,66 @@
+html, body {
+    background-color: #e1e1e1;
+    font-family: arial, helvetica, sans-serif;
+}
+
+h1 {
+    font-size: 20px;
+    color: #fff;
+    text-shadow: 0 1px 3px #500;
+    background-color: #b9090b;
+    padding: 15px 7px;
+    text-align: center;
+}
+
+.netbox-container {
+    text-align: center;
+}
+
+.netbox {
+    width: 166px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    display: inline-block;
+    padding: 10px;
+    margin: 7px;
+    text-align: left;
+}
+
+.netbox a {
+    text-decoration: none;
+    color: #000;
+}
+
+.netbox a:hover {
+    text-decoration: none;
+    color: #555;
+}
+
+.netbox h2 {
+    margin-top: 2px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.netbox img {
+    margin: auto;
+    display: block;
+}
+
+a.remove-btn {
+    display: block;
+    color: #fff;
+    text-shadow: 0 1px 3px #500;
+    background-color: #b9090b;
+    padding: 8px;
+    margin: 5px 0;
+    text-decoration: none;
+    outline: none;
+    text-align: center;
+}
+
+a.remove-btn:hover {
+    color: white;
+    background-color: #ca1a1c;
+}
