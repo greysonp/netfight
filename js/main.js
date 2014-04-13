@@ -14,7 +14,6 @@ function init() {
 function netfightClick(e) {
     // Get the reference to the popup box container
     var $parent = $(this).parents('.agMovie');
-    console.log($parent);
 
     // Get all of the movie attributes we want
     var id = $parent.attr('id').substring(3);
