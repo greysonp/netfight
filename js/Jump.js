@@ -8,6 +8,7 @@ this.cutie.Behavior = this.cutie.Behavior || {};
         // ================================================
         var props = props || {};
         var o = {};
+        var hopping = true;
 
         // ================================================
         // PUBLIC METHODS
@@ -20,6 +21,10 @@ this.cutie.Behavior = this.cutie.Behavior || {};
 
         this.tick = function(obj) {
 
+        }
+
+        this.clean = function() {
+            hopping = false;
         }
 
         function hop() {
@@ -43,7 +48,8 @@ this.cutie.Behavior = this.cutie.Behavior || {};
             var rx = Math.cos(angle) * rad + o.x;
             var ry = Math.sin(angle) * rad + o.y;
 
-            createjs.Tween.get(o).to({'x': rx, 'y': ry}, 100).call(hop);
+            if (hopping)
+                createjs.Tween.get(o).to({'x': rx, 'y': ry}, 100).call(hop);
         }
     }
 

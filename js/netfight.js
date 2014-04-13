@@ -41,8 +41,6 @@ $(document).ready(function() {
             
             chrome.storage.local.set({ 'netfight': oldArray });
         });
-
-        alert('Done');
     });
 });
 

@@ -117,22 +117,47 @@ $(window).resize(function() {
         var angle = angleOffset / 2;
         var radius = cutie.HEIGHT/4;
         for (var i = 0; i < thumbnails.length; i++) {
-            var f = makeFighter(preloaded, thumbnails[i], null);
+            var f = makeFighter(preloaded, thumbnails[i], null, storageData[i].metacritic, storageData[i].imdb);
             f.x = Math.cos(angle) * radius + cx;
             f.y = Math.sin(angle) * radius + cy;
             angle += angleOffset;
             fighters.push(f);
             f.addBehavior(new cutie.Behavior.Jump());
+            f.addBehavior(new cutie.Behavior.ShootRandom({
+                'projectile': preloaded.getResult('wizard_hat_projectile'),
+                'enemies': fighters
+            }));
             this.addChild(f);
         }
     }
 
-    function makeFighter(preloaded, thumbnail, addonId) {
+    function makeFighter(preloaded, thumbnail, addonId, health, attack) {
         var bitmap = new cutie.Bitmap(thumbnail);
         bitmap.regX = bitmap.image.width/2;
         bitmap.regY = bitmap.image.height/2;
         bitmap.scaleX = bitmap.scaleY = 0.4;
+
+        bitmap.health = health || 10;
+        bitmap.attack = attack || 1;
+
         return bitmap;
+    }
+
+    scene.deleteFighter = function(fighter) {
+        console.log('DELETE FIGHTER');
+        if (fighters.length == 1)
+            return;
+        for (var i = 0; i < fighter.behaviors.length; i++) {
+            fighter.behaviors[i].clean();
+        }
+        console.log(fighter.behaviors);
+        for (var i = fighters.length - 1; i >= 0; i--) {
+            if (fighters[i] == fighter) {
+                fighters.splice(i, 1);
+                cutie.getActiveScene().removeChild(fighter);
+                break;
+            }
+        }
     }
 
     cutie.registerScene(scene, 'fight');
