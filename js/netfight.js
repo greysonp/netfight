@@ -13,6 +13,37 @@ $(document).ready(function() {
         }
         preloadNetfight();
     });
+
+
+    //Saves the movie for fighter objects
+    $(".remove-btn.big-btn").click(function(){
+        // Store the movie in local storage
+        chrome.storage.local.get('netfight', function(old) {
+            // Get the old array, or initialize it if it doesn't exist
+            var oldArray = null;
+            if (!old ||  Object.keys(old).length === 0)
+                oldArray = [];
+            else
+                oldArray = old['netfight'];
+
+            for(var i = 0 ; i < oldArray.length; i++){
+                obj = {
+                    'id': oldArray[i].id,
+                    'title': oldArray[i].title,
+                    'link': oldArray[i].link,
+                    'img': oldArray[i].img,
+                    'imdb': $('#netbox-' + oldArray[i].id + ' .imdb').text(),
+                    'metacritic': $('#netbox-' + oldArray[i].id + ' .metacritic').text()
+                }
+                oldArray[i] = obj;
+            }
+
+            
+            chrome.storage.local.set({ 'netfight': oldArray });
+        });
+
+        alert('Done');
+    });
 });
 
 function enableNetfight() {
@@ -111,12 +142,12 @@ function getMetaCriticTVRatings(title, id) {
 
 
 function imdbPrint(ratingStats, id) {
-    $('#netbox-' + id + ' .imdb').text(ratingStats.IMDBScore + ' out of 10');
+    $('#netbox-' + id + ' .imdb').text(ratingStats.IMDBScore);
     $('#netbox-' + id + ' .genre').text(ratingStats.Genre);
 }
 
 function metaPrint(ratingStats, id) {
-    $('#netbox-' + id + ' .metacritic').text(ratingStats.MetaRating + ' out of 100');
+    $('#netbox-' + id + ' .metacritic').text(ratingStats.MetaRating);
 }
 
 
