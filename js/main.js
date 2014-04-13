@@ -14,20 +14,22 @@ function init() {
 function netfightClick(e) {
     // Get the reference to the popup box container
     var $parent = $(this).parents('.agMovie');
+    console.log($parent);
 
     // Get all of the movie attributes we want
     var id = $parent.attr('id').substring(3);
     var title = $parent.find('.title').text().trim();
     var link = $parent.find('.bobMovieHeader a:first').attr('href');
     var img = $('.vbox_' + id + ' img').attr('src');
-    var rating = $parent.find('span.sbmfpr').attr('class');
-    rating = parseInt(rating.split('sbmf-')[1])/10;
+    // var rating = $parent.find('span.sbmfpr').attr('class');
+    // rating = parseInt(rating.split('sbmf-')[1])/10;
+
     var obj = {
         'id': id,
         'title': title,
         'link': link,
-        'img': img,
-        'rating': rating
+        'img': img
+        // 'rating': rating
     }
 
     // Store the movie in local storage
