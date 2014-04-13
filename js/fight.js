@@ -122,6 +122,7 @@ $(window).resize(function() {
             f.y = Math.sin(angle) * radius + cy;
             angle += angleOffset;
             fighters.push(f);
+            f.addBehavior(new cutie.Behavior.Jump());
             this.addChild(f);
         }
     }
