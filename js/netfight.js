@@ -2,6 +2,7 @@ var IMDB_API =  "http://www.omdbapi.com/?tomatoes=true";
 var metaCritic_Movie = "http://www.metacritic.com/movie/";
 var metaCritic_TV = "http://www.metacritic.com/tv/";
 
+var _stage;
 
 $(document).ready(function() {
     // Grab all of our netfighters from storage and add them to the page
@@ -10,12 +11,72 @@ $(document).ready(function() {
             makeFighter(obj['netfight'][i]);
             getRatings(obj['netfight'][i].title, obj['netfight'][i].id);
         }
+        preloadNetfight();
     });
 });
 
-function makeFighter(o) {
-    console.log(o); 
+function initNetfight() {
+    _stage = new createjs.Stage("js-canvas");
+}
 
+function preloadNetfight() {
+    console.log("Here");
+    var loader = new createjs.QueueLoader();
+    loader.loadFile("img/astronaut_helmet.png");
+    var manifest = [{
+        'id': 'astronaut_helmet',
+        'src': 'img/astronaut_helmet.png'
+    },
+    {
+        'id': 'guy_fawkes',
+        'src': 'img/guy_fawkes.png'
+    },
+    {
+        'id': 'jason_mask',
+        'src': 'img/jason_mask.png'
+    },
+    {
+        'id': 'jester_hat',
+        'src': 'img/jester_hat.png'
+    },
+    {
+        'id': 'mickey_hat',
+        'src': 'img/mickey_hat.png'
+    },
+    {
+        'id': 'pope_hat',
+        'src': 'img/pope_hat.png'
+    },{
+        'id': 'saiyan_hair',
+        'src': 'img/saiyan_hair.png'
+    },
+    {
+        'id': 'wizard_hat',
+        'src': 'img/wizard_hat.png'
+    },
+    {
+        'id': 'wolverine',
+        'src': 'img/wolverine.png'
+    }
+    ];
+
+    loader.loadManifest(manifest);
+
+    loader.on("complete", function(evt) {
+        console.log(evt);
+    }, 
+    this);
+    loader.on("fileload", function(evt) {
+        console.log(evt);
+    }, this);
+
+}
+
+function enableNetfight() {
+
+}
+
+function makeFighter(o) {
     // Build all of our fighters
     var $div = $('<div></div>', {
         'class': 'netbox',

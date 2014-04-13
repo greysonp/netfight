@@ -6,6 +6,7 @@ $(document).ready(function() {
     chrome.storage.local.get('netfight', function(obj) {
         for (var i = 0, len = obj['netfight'].length; i < len; i++) {
             makeFighter(obj['netfight'][i]);
+            console.log(obj['netfight'][i]);
         }
     });
 });
