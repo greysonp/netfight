@@ -39,6 +39,7 @@ function makeFighter(o) {
     $removeButton.click(removeNetboxClick);
 
     var genre = '<div><strong>Genre(s): </strong><span class="genre"></span></div>';
+    var netflix = '<div><strong>Netflix: </strong><span class="netflix">' + o.rating + ' out of 5</span></div>';
     var imdb = '<div><strong>IMDB: </strong><span class="imdb"></span></div>';
     var metacritic = '<div><strong>Metacritic: </strong><span class="metacritic"></span></div>';
 
@@ -48,6 +49,7 @@ function makeFighter(o) {
     $div.append($img);
     $div.append($removeButton);
     $div.append(genre);
+    $div.append(netflix);
     $div.append(imdb);
     $div.append(metacritic);
 
@@ -107,12 +109,12 @@ function getMetaCriticTVRatings(title, id) {
 
 
 function imdbPrint(ratingStats, id) {
-    $('#netbox-' + id + ' .imdb').text(ratingStats.IMDBScore);
+    $('#netbox-' + id + ' .imdb').text(ratingStats.IMDBScore + ' out of 10');
     $('#netbox-' + id + ' .genre').text(ratingStats.Genre);
 }
 
 function metaPrint(ratingStats, id) {
-    $('#netbox-' + id + ' .metacritic').text(ratingStats.MetaRating);
+    $('#netbox-' + id + ' .metacritic').text(ratingStats.MetaRating + ' out of 100');
 }
 
 
