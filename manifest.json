@@ -41,7 +41,7 @@
   "permissions": [
     "http://www.netflix.com/*", 
     "https://www.netflix.com/*",
-    "http://cdn7.nflximg.net/*",
+    "http://netfight-img.herokuapp.com/*",
     "http://www.metacritic.com/*", 
     "tabs", 
     "storage"

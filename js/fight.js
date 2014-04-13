@@ -1,4 +1,6 @@
 var storageData = [];
+var thumbnails = [];
+var DATA_URL = 'http://netfight-img.herokuapp.com/?url=';
 
 $(document).ready(function() {
     $('#js-canvas').attr('width', window.innerWidth);
@@ -10,7 +12,11 @@ $(document).ready(function() {
     // Get data from storage, then kick-off the game
     chrome.storage.local.get('netfight', function(obj) {
         storageData = obj['netfight'];
-        cutie.start("fight");
+
+        async.map(storageData, getBase64, function(err, results){
+            thumbnails = results;
+            cutie.start("fight");
+        });
     });
 }); 
 
@@ -26,16 +32,6 @@ $(window).resize(function() {
     var scene = new cutie.Scene();
 
     scene.preload = function(loader) {
-        // Thumbnails
-        for (var i = 0; i < storageData.length; i++) {
-            var o = storageData[i];
-            loader.loadFile({
-                'id': o.id,
-                'src': o.img
-            });
-        }
-
-        // Extras
         loader.loadFile({
             'id': 'astronaut_helmet',
             'src': 'img/astronaut_helmet.png'
@@ -112,20 +108,30 @@ $(window).resize(function() {
 
     scene.init = function(preloaded) {
         cutie.Log.d('title.init()');
-        
-        for (var i = 0; i < storageData.length; i++) {
-            var o = storageData[i];
-            var f = makeFighter(preloaded, o.id, null);
+
+        // Put images on the stage        
+        for (var i = 0; i < thumbnails.length; i++) {
+            var f = makeFighter(preloaded, thumbnails[i], null);
             f.x = Math.random() * cutie.WIDTH;
             f.y = Math.random() * cutie.HEIGHT;
             this.addChild(f);
         }
     }
 
-    function makeFighter(preloaded, thumbnailId, addonId) {
-        var bitmap = new cutie.Bitmap(preloaded.getResult(thumbnailId));
+    function makeFighter(preloaded, thumbnail, addonId) {
+        var bitmap = new cutie.Bitmap(thumbnail);
         return bitmap;
     }
 
     cutie.registerScene(scene, 'fight');
 })();
+
+
+function getBase64(o, callback) {
+    var url = DATA_URL + o.img;
+    $.get(url, function(results) {
+        var image = new Image();
+        image.src = results;
+        callback(null, image);
+    });
+}
