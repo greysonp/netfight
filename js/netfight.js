@@ -5,6 +5,11 @@ var metaCritic_TV = "http://www.metacritic.com/tv/";
 var _stage;
 
 $(document).ready(function() {
+    if (window.location.href.indexOf('winner') >= 0) {
+        $('#js-title').text('Your Champion!');
+        $('.remove-btn.big-btn').remove();
+    }
+
     // Grab all of our netfighters from storage and add them to the page
     chrome.storage.local.get('netfight', function(obj) {
         for (var i = 0; i < obj['netfight'].length; i++) {

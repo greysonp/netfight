@@ -120,6 +120,7 @@ $(window).resize(function() {
             var f = makeFighter(preloaded, thumbnails[i], null, storageData[i].metacritic, storageData[i].imdb);
             f.x = Math.cos(angle) * radius + cx;
             f.y = Math.sin(angle) * radius + cy;
+            f.id = storageData[i].id;
             angle += angleOffset;
             fighters.push(f);
             f.addBehavior(new cutie.Behavior.Jump());
@@ -144,9 +145,9 @@ $(window).resize(function() {
     }
 
     scene.deleteFighter = function(fighter) {
-        console.log('DELETE FIGHTER');
-        if (fighters.length == 1)
+        if (fighters.length == 1) {
             return;
+        }
         for (var i = 0; i < fighter.behaviors.length; i++) {
             fighter.behaviors[i].clean();
         }
@@ -158,6 +159,21 @@ $(window).resize(function() {
                 break;
             }
         }
+
+        if (fighters.length == 1) {
+            gameOver();
+        }
+    }
+
+    function gameOver() {
+        console.log('Game Over');
+        for (var i = storageData.length - 1; i >= 0; i--) {
+            if (storageData[i].id != fighters[0].id)
+                storageData.splice(i, 1);
+        }
+        chrome.storage.local.set({ 'netfight': storageData });
+        console.log(chrome.extension.getURL('netfight.html'));
+        window.location.href = chrome.extension.getURL('netfight.html') + '#winner';
     }
 
     cutie.registerScene(scene, 'fight');
