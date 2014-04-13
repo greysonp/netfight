@@ -41,36 +41,72 @@ $(window).resize(function() {
             'src': 'img/astronaut_helmet.png'
         });
         loader.loadFile({
+            'id': 'astronaut_helmet_projectile',
+            'src': 'img/astronaut_helmet_projectile.png'
+        });
+        loader.loadFile({
             'id': 'guy_fawkes',
             'src': 'img/guy_fawkes.png'
+        });
+        loader.loadFile({
+            'id': 'guy_fawkes_projectile',
+            'src': 'img/guy_fawkes_projectile.png'
         });
         loader.loadFile({
             'id': 'jason_mask',
             'src': 'img/jason_mask.png'
         });
         loader.loadFile({
+            'id': 'jason_mask_projectile',
+            'src': 'img/jason_mask_projectile.png'
+        });
+        loader.loadFile({
             'id': 'jester_hat',
             'src': 'img/jester_hat.png'
+        });
+        loader.loadFile({
+            'id': 'jester_hat_projectile',
+            'src': 'img/jester_hat_projectile.png'
         });
         loader.loadFile({
             'id': 'mickey_hat',
             'src': 'img/mickey_hat.png'
         });
         loader.loadFile({
+            'id': 'mickey_hat_projectile',
+            'src': 'img/mickey_hat_projectile.png'
+        });
+        loader.loadFile({
             'id': 'pope_hat',
             'src': 'img/pope_hat.png'
+        });
+        loader.loadFile({
+            'id': 'pope_hat_projectile',
+            'src': 'img/pope_hat_projectile.png'
         });
         loader.loadFile({
             'id': 'saiyan_hair',
             'src': 'img/saiyan_hair.png'
         });
         loader.loadFile({
+            'id': 'saiyan_hair_projectile',
+            'src': 'img/saiyan_hair_projectile.png'
+        });
+        loader.loadFile({
             'id': 'wizard_hat',
             'src': 'img/wizard_hat.png'
         });
         loader.loadFile({
+            'id': 'wizard_hat_projectile',
+            'src': 'img/wizard_hat_projectile.png'
+        });
+        loader.loadFile({
             'id': 'wolverine',
             'src': 'img/wolverine.png'
+        });
+        loader.loadFile({
+            'id': 'wolverine_projectile',
+            'src': 'img/wolverine_projectile.png'
         });
     }
 
