@@ -1,3 +1,18 @@
+html, body {
+    font-family: arial, helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e1e1e1;
+    width: 400px;
+}
+
+h1 {
+    font-size: 16px;
+    color: #fff;
+    background-color: #b9090b;
+    padding: 10px 7px;
+}
+
 ul.fighters {
     margin: 0;
     padding: 0;
@@ -10,11 +25,13 @@ ul.fighters {
 ul.fighters li {
     display: inline-table;
     position: relative;
+    margin: 5px;
 }
 
 ul.fighters div.fighterInner img {
     width: 166px;
     height: 236px;
+    border: 1px solid #a4a4a4;
 }
 
 ul.fighters div.fighterOverlay {
@@ -42,4 +59,19 @@ ul.fighters div.fighterOverlay p {
     -ms-filter: 'progid:DXImageTransform.Microsoft.Matrix(Dx=0,Dy=0)'; /*IE8 */
     filter: progid:DXImageTransform.Microsoft.Matrix(Dx=0,Dy=0); /*IE6, IE7*/
     transform: translateY(-50%);   
+}
+
+a.btn {
+    display: inline-block;
+    color: #fff;
+    background-color: #b9090b;
+    border: 1px solid #ccc;
+    padding: 8px;
+    margin: 5px 0 5px 5px;
+    text-decoration: none;
+    outline: none;
+}
+
+a.btn:hover {
+    background-color: #ca1a1c;
 }
